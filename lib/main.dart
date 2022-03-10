@@ -59,12 +59,11 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
   createQrCode(text, color) async{
 
-    print("Code");
 
-    var uri = (Uri.parse("http://api.qrserver.com/v1/create-qr-code/?data=$word!&size=100x100"));
+    String uri = ('http://api.qrserver.com/v1/create-qr-code/?data=$word!&size=100x100');
 
-    var response= await http.get(uri);
-    print(response.body);
+    var response= await http.get(Uri.parse(uri));
+    print("response " + response.body);
     setState(() {
       imageUrl = response.body;
     });
@@ -266,9 +265,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                         child: Text("Create QR", style: TextStyle(
                           color: Colors.white
                         ),),
-                        onPressed: () {
+                        onPressed: () async{
                           if (word != null) {
-                            createQrCode(word, "${pickerColor.red.toRadixString(16)}${pickerColor.green.toRadixString(16)}${pickerColor.blue.toRadixString(16)}");
+                            await createQrCode(word, "${pickerColor.red.toRadixString(16)}${pickerColor.green.toRadixString(16)}${pickerColor.blue.toRadixString(16)}");
 
                           }
                         },
